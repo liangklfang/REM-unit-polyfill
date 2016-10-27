@@ -29,7 +29,7 @@
             xhr( links[i], storeCSS );
         }
     },
-
+    //第一个参数为xhr，第二个参数为url
     storeCSS = function ( response, link ) {
 
         preCSS.push(response.responseText);
@@ -177,12 +177,13 @@
         // Notice: rem is a "root em" that means that in case when html element size was changed by css
         // or style we should not change document.documentElement.fontSize to 1em - only body size should be changed
         // to 1em for calculation
-
+        //当html的大小发生变化了，我们不应该把document.documentElement.fontSize设置为1rem，只能把body改变为1em!
+        //这个方法是计算html元素的font-size的方法
         fontSize = (function () {
             var doc = document,
                 docElement = doc.documentElement,
                 body = doc.body || doc.createElement('body'),
-                isFakeBody = !doc.body,
+                isFakeBody = !doc.body,//如果document没有body属性，那么就是FakeBody
                 div = doc.createElement('div'),
                 currentSize = body.style.fontSize,
                 size;
@@ -194,7 +195,7 @@
             div.style.cssText = 'width:1em; position:absolute; visibility:hidden; padding: 0;';
 
             body.style.fontSize = '1em';
-
+            //如果把body设置为1em，同时div也是1rem，这时候div的width就是相对于html/body的宽度来说的，也就是只要计算div的offsetWidth就好
             body.appendChild( div );
             size = div.offsetWidth;
 
